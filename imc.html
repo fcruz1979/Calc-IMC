@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de IMC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+
+    input[type="text"], input[type="number"], input[type="submit"] {
+      margin-bottom: 10px;
+      padding: 5px;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Calculadora de IMC</h1>
+  <form id="imcForm">
+    <input type="text" id="name" placeholder="Nome do paciente" required><br>
+    <input type="number" id="weight" placeholder="Peso (kg)" step="0.01" required><br>
+    <input type="number" id="height" placeholder="Altura (metros)" step="0.01" required><br>
+    <input type="submit" value="Calcular IMC">
+  </form>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById('imcForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      calculateIMC();
+    });
+
+    function calculateIMC() {
+      const name = document.getElementById('name').value;
+      const weight = parseFloat(document.getElementById('weight').value);
+      const height = parseFloat(document.getElementById('height').value);
+
+      const imc = weight / (height * height);
+      const resultDiv = document.getElementById('result');
+
+      let risk = '';
+
+      if (imc < 20) {
+        risk = 'Abaixo do peso';
+      } else if (imc >= 20 && imc <= 25) {
+        risk = 'Normal';
+      } else if (imc > 25 && imc <= 30) {
+        risk = 'Excesso de peso';
+      } else if (imc > 30 && imc <= 35) {
+        risk = 'Obesidade';
+      } else {
+        risk = 'Obesidade mórbida';
+      }
+
+      resultDiv.innerHTML = `<p>${name}:</p><p>IMC: ${imc.toFixed(2)}</p><p>Faixa de risco: ${risk}</p>`;
+    }
+  </script>
+</body>
+</html>
